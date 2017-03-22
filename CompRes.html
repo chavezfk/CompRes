@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>Community Computer Sign-In</title>
+    <link rel="stylesheet" type="text/css" href="global.css" />
+    <script type="text/javascript" src="SigWebTablet.js"></script>
+    <script type="text/javascript" src="sheets_setup.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    
+    <script type="text/javascript">
+        var sig;
+
+        window.onload = function()
+        {
+           var ctx = document.getElementById('sig_canvas').getContext('2d');         
+           SetDisplayXSize( 500 );
+           SetDisplayYSize( 100 );
+           SetTabletState(0, sig);
+           SetJustifyMode(0);
+           ClearTablet();
+           if(sig == null)
+           {
+              sig = SetTabletState(1, ctx, 50);
+           }
+           else
+           {
+              SetTabletState(0, sig);
+              sig = null;
+              sig = SetTabletState(1, ctx, 50);
+           }
+        };
+
+        function onClear()
+        {
+           ClearTablet();
+        }
+
+
+            
+
+    </script>
+</head>
+
+<body>
+    <table border="1px solid black">
+        <tr>
+            <td><canvas id="sig_canvas" name="cnv" width="500" height="100"/></td>
+        </tr>
+    </table>
+    
+    <form>
+        <input type="button" value="Clear Signature" onclick="javascript:onClear()">
+    </form>
+</body>
+
+</html>

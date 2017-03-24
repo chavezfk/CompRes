@@ -37,9 +37,15 @@
            ClearTablet();
         }
         
+        function SaveSig()
+        {
+            document.getElementById('sig').value = GetSigString(); 
+        }
+        
         function test()
         {
             listReserves();
+            //alert(GetSigString());
         }
         
         function listReserves() {
@@ -67,7 +73,7 @@
 </head>
 
 <body>
-    <form action="submit.php">
+    <form method="post">
     <table>
         <tr>
             <td>
@@ -90,10 +96,12 @@
             </td>
         </tr>
     </table>
-    
+        
         <input type="button" value="Clear Signature" onclick="javascript:onClear()">
         <input type="button" value="Test" onclick="javascript:test()">
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" onclick="javascrip:SaveSig()">
+        
+        <input type="text" id="sig" name="sig" style="display: none"></div>
     </form>
     
     

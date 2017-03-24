@@ -59,7 +59,7 @@
                 for (i = 0; i < range.values.length; i++) {
                   var row = range.values[i];
                   // Print columns A, B, and C, which correspond to indices 0, 1, and 2.
-                  console.log("Name: " + row[0] + "\tDate:" + row[1] + "\tsignature" + row[2]);
+                  console.log("Name: " + row[0] + "\tDate:" + row[1] + "\tsignature: " + row[2]);
                 }
               } else {
                 
@@ -68,7 +68,34 @@
               appendPre('Error: ' + response.result.error.message);
             });
           }
+            /**
+           *  Called when the signed in status changes, to update the UI
+           *  appropriately. After a sign-in, the API is called.
+           */
+          function updateSigninStatus(isSignedIn) {
+            if (isSignedIn) {
+              authorizeButton.style.display = 'none';
+              signoutButton.style.display = 'block';
+              listMajors();
+            } else {
+              authorizeButton.style.display = 'block';
+              signoutButton.style.display = 'none';
+            }
+          }
 
+          /**
+           *  Sign in the user upon button click.
+           */
+          function handleAuthClick(event) {
+            gapi.auth2.getAuthInstance().signIn();
+          }
+
+          /**
+           *  Sign out the user upon button click.
+           */
+          function handleSignoutClick(event) {
+            gapi.auth2.getAuthInstance().signOut();
+          }
     </script>
 </head>
 
@@ -103,7 +130,8 @@
         
         <input type="text" id="sig" name="sig" style="display: none"></div>
     </form>
-    
+    <button id="authorize-button" style="display: none;">Authorize</button>
+    <button id="signout-button" style="display: none;">Sign Out</button>
     
 
 </body>

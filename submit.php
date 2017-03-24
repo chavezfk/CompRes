@@ -1,5 +1,5 @@
-<?
-    echo($_POST['sig']);
+<?php
+    echo $_POST['sig'];
 
 
 ?>

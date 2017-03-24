@@ -11,12 +11,10 @@
     
     <script type="text/javascript">
         var sig;
-        var authorizeButton = document.getElementById('authorize-button');
-        var signoutButton = document.getElementById('signout-button');
         
         window.onload = function()
         {
-           var ctx = document.getElementById('sig_canvas').getContext('2d');         
+           /*var ctx = document.getElementById('sig_canvas').getContext('2d');         
            SetDisplayXSize( 500 );
            SetDisplayYSize( 100 );
            SetTabletState(0, sig);
@@ -31,7 +29,7 @@
               SetTabletState(0, sig);
               sig = null;
               sig = SetTabletState(1, ctx, 50);
-           }
+           }*/
         };
 
         function onClear()
@@ -119,10 +117,12 @@
         </tr>
         <tr>
 
+            <!--
             <td >
                 <label style="vertical-align:top" for="sig_canvas" class="required">Signature:</label>
                 <canvas id="sig_canvas" name="cnv" width="500" height="100"/>
             </td>
+            !-->
         </tr>
     </table>
         

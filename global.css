@@ -2,3 +2,22 @@
     border: 1px solid black;
     
 }
+
+body {
+      margin: 0.5in 1in;
+      font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+      color: #333;
+    }
+    
+#reservations {
+    border: 1px solid black;
+}
+
+#reservations tr th{
+    text-align: middle;
+    border: 3px solid black;
+}
+
+#reservations tr td{
+   border: 1px solid black;
+}

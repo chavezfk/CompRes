@@ -14,79 +14,48 @@
         
         window.onload = function()
         {
-           /*var ctx = document.getElementById('sig_canvas').getContext('2d');         
-           SetDisplayXSize( 500 );
-           SetDisplayYSize( 100 );
-           SetTabletState(0, sig);
-           SetJustifyMode(0);
-           ClearTablet();
-           if(sig == null)
-           {
+            /*var ctx = document.getElementById('sig_canvas').getContext('2d');         
+            SetDisplayXSize( 500 );
+            SetDisplayYSize( 100 );
+            SetTabletState(0, sig);
+            SetJustifyMode(0);
+            ClearTablet();
+            if(sig == null)
+            {
               sig = SetTabletState(1, ctx, 50);
-           }
-           else
-           {
+            }
+            else
+            {
               SetTabletState(0, sig);
               sig = null;
               sig = SetTabletState(1, ctx, 50);
-           }*/
+            }*/
+           
         };
-
-        function onClear()
-        {
-           ClearTablet();
-        }
-        
-        function SaveSig()
-        {
-            document.getElementById('sig').value = GetSigString(); 
-        }
-        
-        function test()
-        {
-            listReserves();
-            //alert(GetSigString());
-        }
-        
-        function listReserves() {
-            gapi.client.sheets.spreadsheets.values.get({
-              spreadsheetId: '1QoYsSxvCeSjjlbD8NVcOLXjun-tEHoFaKIG4TxcZkAU',
-              range: 'SignIn!A2:C',
-            }).then(function(response) {
-              var range = response.result;
-              if (range.values.length > 0) {
-                
-                for (i = 0; i < range.values.length; i++) {
-                  var row = range.values[i];
-                  // Print columns A, B, and C, which correspond to indices 0, 1, and 2.
-                  console.log("Name: " + row[0] + "\tDate:" + row[1] + "\tsignature: " + row[2]);
-                }
-              } else {
-                
-              }
-            }, function(response) {
-              appendPre('Error: ' + response.result.error.message);
-            });
-          }
 
     </script>
 </head>
 
 <body>
-    <form method="post">
+    <img style="float:right" src="Logo.PNG"/>
+    <h1 style="clear: both">Skeen Library Community Computer Sign-In</h1>
+    <p>Skeen Library has several community computers available for reservation.
+    A person can reserve a computer for no more than one hour per 24-hour period.
+    To reserve a computer, the person must show their ID to circulation, who will then fill out this form. 
+    The person's name will then be added to the list of names for the day. 
+    </p>
+  
+    <form method="post" id="form">
     <table>
         <tr>
             <td>
                 <label for="first" class="required">First Name:</label>
                 <input type="text" name="first" id="first"/>
             </td>
-        </tr>
-        <tr>
             <td>
                 <label for="last" class="required">Last Name:</label>
                 <input type="text" name="last" id="last"/>
             </td>
-            
         </tr>
         <tr>
 
@@ -99,12 +68,122 @@
         </tr>
     </table>
         
-        <input type="button" value="Clear Signature" onclick="javascript:onClear()">
-        <input type="button" value="Test" onclick="javascript:test()">
-        <input type="submit" value="Submit" onclick="javascrip:SaveSig()">
+        <!--<input type="button" value="Clear Signature" onclick="javascript:onClear()">!-->
+        <input type="button" value="Test" onclick="javascript:listReserves()">
+        <input type="button" value="Submit" onclick="javascript:trySubmit()">
         
         <input type="text" id="sig" name="sig" style="display: none"></div>
     </form>
+    
+    <h4>Previous Reservations</h4>
+    <button id="showOld" onclick="javascript:showOlder()">Show All</button>
+    <button id="showToday" onclick="javascript:hideOlder()" style="display:none">Show Only Today</button>
+    <table id="reservations">
+    <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Name</th>
+    </tr>
+    </table>
+    
+    <script type="text/javascript">
+            function onClear()
+        {
+           ClearTablet();
+        }
+        
+        function trySubmit()
+        {
+            //document.getElementById('sig').value = GetSigString(); 
+            if(checkName()){
+                document.forms['form'].submit();
+            }
+            
+        }
+        
+        function showOlder()
+        {
+            alert("not done yet");
+        }
+        
+        
+        function checkName()
+        {
+            var table = document.getElementById("reservations");
+            var i = table.rows.length;
+            var d = new Date();
+            var today = Date.parse(d.getMonth() + 1 +'/'+ d.getDate() +'/'+ d.getFullYear());
+            var row, date;
+            var name = document.getElementById('first').value + " " + document.getElementById("last").value;
+            alert(name);
+            
+            listReserves(); //update table, just in case
+            //if name is found, dont submit
+            for(var c = 0; c < i; c++){
+                row = table.rows[c];
+                if(name == row.cells[2].innerText){
+                    alert("found someone");
+                    date = Date.parse(row.cells[0].innerText);
+                    if(date == today){
+                        alert("already reserved today");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        
+        function emptyTable()
+        {
+            var table = document.getElementById('reservations').childNodes[1];
+            while(table.childNodes.length > 2){
+                table.removeChild(table.childNodes[2]);
+            }
+        }
+        
+        function listReserves()
+        {
+            
+            var table = document.getElementById('reservations');
+            var trow;
+            var date;
+            var time;
+            var name;
+            emptyTable();
+            gapi.client.sheets.spreadsheets.values.get({
+              spreadsheetId: '1QoYsSxvCeSjjlbD8NVcOLXjun-tEHoFaKIG4TxcZkAU',
+              range: 'SignIn!A2:C',
+            }).then(function(response) {
+              var range = response.result;
+              if (range.values.length > 0) {
+                
+                for (i = 0; i < range.values.length; i++) {
+                    var row = range.values[i];
+                    // Print columns A-C, which correspond to indices 0-2.
+                    console.log("Date:" + row[0] + "\tTime:" + row[1] + "\tName:" + row[2]);
+
+                    //insert new row in Reservations table
+                    trow = table.insertRow(-1);
+                    date = trow.insertCell(-1);
+                    time = trow.insertCell(-1);
+                    name = trow.insertCell(-1);
+                    
+                    //add data to Reservations
+                    date.innerText = row[0];
+                    time.innerText = row[1];
+                    name.innerText = row[2];
+                    
+                
+                }
+              } else {
+                
+              }
+            }, function(response) {
+              appendPre('Error: ' + response.result.error.message);
+            });
+          }
+
+    </script>
 </body>
 
 </html>

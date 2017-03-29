@@ -30,7 +30,7 @@
               sig = null;
               sig = SetTabletState(1, ctx, 50);
             }*/
-           
+           listReserves();
         };
 
     </script>
@@ -94,10 +94,14 @@
         
         function trySubmit()
         {
-            //document.getElementById('sig').value = GetSigString(); 
-            if(checkName()){
-                document.forms['form'].submit();
-            }
+            
+            listReserves(); //update table, just in case
+            
+            var delay = 500;
+            var start = Date.parse(new Date());
+            var now = Date.parse(new Date());
+            
+            setTimeout("checkName()", 500);
             
         }
         
@@ -115,10 +119,6 @@
             var today = Date.parse(d.getMonth() + 1 +'/'+ d.getDate() +'/'+ d.getFullYear());
             var row, date;
             var name = document.getElementById('first').value + " " + document.getElementById("last").value;
-            alert(name);
-            
-            listReserves(); //update table, just in case
-            //if name is found, dont submit
             for(var c = 0; c < i; c++){
                 row = table.rows[c];
                 if(name == row.cells[2].innerText){
@@ -126,11 +126,11 @@
                     date = Date.parse(row.cells[0].innerText);
                     if(date == today){
                         alert("already reserved today");
-                        return false;
+                        return;
                     }
                 }
             }
-            return true;
+            document.forms['form'].submit();
         }
         
         function emptyTable()

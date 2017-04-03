@@ -97,10 +97,7 @@
             
             listReserves(); //update table, just in case
             
-            var delay = 500;
-            var start = Date.parse(new Date());
-            var now = Date.parse(new Date());
-            
+            //wait for DOM to update so you can search the table, just in case
             setTimeout("checkName()", 500);
             
         }
@@ -110,7 +107,10 @@
             alert("not done yet");
         }
         
-        
+        /** 
+        * compare the name to the table
+        * if name is found, tell the user, otherwise submit
+        */
         function checkName()
         {
             var table = document.getElementById("reservations");

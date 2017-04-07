@@ -100,15 +100,17 @@
             for(var c = 0; c < i; c++){
                 row = table.rows[c];
                 if(name == row.cells[2].innerText){
-                    alert("found someone");
                     date = Date.parse(row.cells[0].innerText);
                     if(date == today){
-                        alert("already reserved today");
+                        window.location.href = "error.html?"+name;
                         return;
                     }
                 }
             }
-            document.forms['form'].submit();
+            addRegistration(name);
+            
+            window.location.href = "confirmation.html?"+name;
+            //document.forms['form'].submit();
         }
         
         function emptyTable()

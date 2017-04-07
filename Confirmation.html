@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>Community Computer Sign-In</title>
+    <link rel="stylesheet" type="text/css" href="global.css" />
+    
+</head>
+<body>
+    <div id="confirm">
+    <br><br><br><br>
+    <h3>Success!</h3>
+    </div>
+    <script>
+        window.onload = function(){
+            var pre = document.createElement("p");
+            var name = window.location.search.substr(1).split("%20");
+            var first = name[0];
+            var last = name[1];
+            var fullname = first + " " + last;
+            pre.innerHTML = "<strong>" + fullname + "</strong> has successfully registered for today!";
+            pre.innerHTML = pre.innerHTML + "<br>Please keep in mind that "+ first + " can only reserve";
+            pre.innerHTML = pre.innerHTML + "<br>a computer for one hour per day. " + first + " will have";
+            pre.innerHTML = pre.innerHTML + "<br>to try again tomorrow if he/she wants more time";
+            
+            document.getElementById("confirm").appendChild(pre);
+            
+            setTimeout("goHome()", 5000);
+        };
+        
+        function goHome() {
+            window.location.href = "CompRes.html";
+        }
+    </script>
+<body>
+</html>

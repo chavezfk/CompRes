@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>Community Computer Sign-In</title>
+    <link rel="stylesheet" type="text/css" href="global.css" />
+    
+</head>
+<body>
+    <div id="error">
+    <br><br><br><br>
+    <h3>Error:</h3>
+    </div>
+    
+    <script type="text/javascript">
+        window.onload = function(){
+            var pre = document.createElement("p");
+            var name = window.location.search.substr(1).split("%20");
+            var first = name[0];
+            var last = name[1];
+            var fullname = first + " " + last;
+            pre.innerHTML = "<strong>" + fullname + "</strong> has already registered today!";
+            pre.innerHTML = pre.innerHTML + "<br>"+ first + " can only reserve a computer for one hour per day.";
+            pre.innerHTML = pre.innerHTML + "<br>Please ask him/her to try again tomorrow.";
+            
+            document.getElementById("error").appendChild(pre);
+            
+            setTimeout("goHome()", 5000);
+        };
+        
+        function goHome() {
+            window.location.href = "CompRes.html";
+        }
+    </script>
+<body>
+</html>

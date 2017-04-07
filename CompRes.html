@@ -213,6 +213,53 @@
         
         
         
+        //add the registered user to the sheets
+        function addRegistration(name) {
+            //get the sheet data so you know where to input the user. 
+            var date = new Date()
+            var formatedDate = toMMDDYYY(date);
+            var time = formatAMPM(date);
+            var values = 
+            [
+                [
+                    formatedDate, time, name,
+                ],
+                // Additional rows ...
+            ];
+            
+            gapi.client.sheets.spreadsheets.values.append({
+              spreadsheetId: '1QoYsSxvCeSjjlbD8NVcOLXjun-tEHoFaKIG4TxcZkAU',
+              range: 'A1',
+              values: values,
+              valueInputOption: 'USER_ENTERED',
+            }).then(function(response) {
+                if(response.error){
+                    alert("encountered an error");
+                }
+            });
+            //update list after adding person
+            
+            setTimeout("listReserves()",500);
+        }
+        
+        //format a date time into AM PM format
+        function formatAMPM(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            return strTime;
+        }
+        
+        //converts a Date object to a string with the format mm/dd/yyyy
+        function toMMDDYYY(date){
+            return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
+        }
+    </script>
+    
     <script type="text/javascript">            
         var authorizeButton = document.getElementById('authorize');
         var signoutButton = document.getElementById('signout');

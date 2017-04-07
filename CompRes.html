@@ -13,6 +13,9 @@
 
 <body>
     <img style="float:right" src="Logo.PNG"/>
+    <button id="authorize" onclick="javascript:handleAuthClick()">Sign in</button>
+    <button id="signout" style="display:none" onclick="javascript:handleSignoutClick()" >Sign Out</button>
+    
     <h1 style="clear: both">Skeen Library Community Computer Sign-In</h1>
     <p>Skeen Library has several community computers available for reservation.
     A person can reserve a computer for no more than one hour per 24-hour period.
@@ -157,7 +160,33 @@
               appendPre('Error: ' + response.result.error.message);
             });
           }
+    <script type="text/javascript">            
+        var authorizeButton = document.getElementById('authorize');
+        var signoutButton = document.getElementById('signout');
+        
+        function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+                authorizeButton.style.display = 'none';
+                signoutButton.style.display = 'block';
+            } else {
+                authorizeButton.style.display = 'block';
+                signoutButton.style.display = 'none';
+            }
+        }
 
+        /**
+        *  Sign in the user upon button click.
+        */
+        function handleAuthClick(event) {
+        gapi.auth2.getAuthInstance().signIn();
+        }
+
+        /**
+        *  Sign out the user upon button click.
+        */
+        function handleSignoutClick(event) {
+        gapi.auth2.getAuthInstance().signOut();
+        }
     </script>
 </body>
 

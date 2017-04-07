@@ -47,13 +47,14 @@
     </table>
         
         <!--<input type="button" value="Clear Signature" onclick="javascript:onClear()">!-->
-        <input type="button" value="Test" onclick="javascript:listReserves()">
+
         <input type="button" value="Submit" onclick="javascript:trySubmit()">
         
         <input type="text" id="sig" name="sig" style="display: none"></div>
     </form>
     
-    <h4>Previous Reservations</h4>
+    <h4 id="previous">Previous Reservations: Today Only</h4>
+    <button id="refresh" onclick="javascript:refresh()">Refresh List</button>
     <button id="showOld" onclick="javascript:showOlder()">Show All</button>
     <button id="showToday" onclick="javascript:hideOlder()" style="display:none">Show Only Today</button>
     <table id="reservations">

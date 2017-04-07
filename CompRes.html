@@ -128,6 +128,18 @@
             var time;
             var name;
             emptyTable();
+            
+            /*gapi.client.script.scripts.run({
+              'scriptId': "1x8W_A5kBRPRE51pU7_eRh8KgdSBQhoBEZR2vrNG5u5Yz7CwN_jCtPC0w",
+              'resource': {
+                'function': 'deleteOldRows'
+              }
+            }).then(function(resp) {
+                if(resp.error){
+                    alert("an error occured");
+                }
+            });*/
+            
             gapi.client.sheets.spreadsheets.values.get({
               spreadsheetId: '1QoYsSxvCeSjjlbD8NVcOLXjun-tEHoFaKIG4TxcZkAU',
               range: 'SignIn!A2:C',

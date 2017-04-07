@@ -168,33 +168,51 @@
               range: 'SignIn!A2:C',
             }).then(function(response) {
               var range = response.result;
-              if (range.values.length > 0) {
-                
-                for (i = 0; i < range.values.length; i++) {
-                    var row = range.values[i];
-                    // Print columns A-C, which correspond to indices 0-2.
-                    console.log("Date:" + row[0] + "\tTime:" + row[1] + "\tName:" + row[2]);
+              if(range.values){
+                  if (range.values.length > 0) {
+                    
+                    for (i = range.values.length -1; i >=0 ; i--) {
+                        var row = range.values[i];
+                        // Print columns A-C, which correspond to indices 0-2.
 
-                    //insert new row in Reservations table
-                    trow = table.insertRow(-1);
-                    date = trow.insertCell(-1);
-                    time = trow.insertCell(-1);
-                    name = trow.insertCell(-1);
+                        //insert new row in Reservations table
+                        trow = table.insertRow(-1);
+                        date = trow.insertCell(-1);
+                        time = trow.insertCell(-1);
+                        name = trow.insertCell(-1);
+                        
+                        //add data to Reservations
+                        date.innerText = row[0];
+                        time.innerText = row[1];
+                        name.innerText = row[2];
+                        
+                        hideRow(trow);
                     
-                    //add data to Reservations
-                    date.innerText = row[0];
-                    time.innerText = row[1];
-                    name.innerText = row[2];
+                    }
+                  } else {
                     
-                
-                }
-              } else {
-                
+                  }
               }
             }, function(response) {
               appendPre('Error: ' + response.result.error.message);
             });
           }
+          
+        function hideRow(trow)
+        {
+            if(!showOld)
+            {
+                var today = toMMDDYYY(new Date());
+                var oldDate = toMMDDYYY( new Date(trow.cells[0].innerText));
+                if( new Date(oldDate).getTime() < new Date(today).getTime())
+                {
+                    trow.style.display = 'none';
+                }
+            }
+        }
+        
+        
+        
     <script type="text/javascript">            
         var authorizeButton = document.getElementById('authorize');
         var signoutButton = document.getElementById('signout');

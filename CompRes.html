@@ -66,7 +66,9 @@
     </table>
     
     <script type="text/javascript">
-            function onClear()
+        var showOld = false;
+    
+        function onClear()
         {
            ClearTablet();
         }
@@ -77,14 +79,32 @@
             listReserves(); //update table, just in case
             
             //wait for DOM to update so you can search the table, just in case
-            setTimeout("checkName()", 500);
+            setTimeout("checkName()", 1000);
             
         }
         
         function showOlder()
         {
-            alert("not done yet");
+            showOld = true;
+            document.getElementById("showOld").style.display = 'none';
+            document.getElementById("showToday").style.display = 'inline';
+            document.getElementById("previous").innerText = "Previous Reservations: Last 30 days";
+            refresh();
         }
+        
+        function hideOlder()
+        {
+            showOld = false;
+            document.getElementById("showOld").style.display = 'inline';
+            document.getElementById("showToday").style.display = 'none';
+            document.getElementById("previous").innerText = "Previous Reservations: Today Only";
+            refresh();
+        }
+        
+        function refresh(){
+            listReserves();
+        }
+        
         
         /** 
         * compare the name to the table

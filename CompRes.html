@@ -2,7 +2,6 @@
 <head>
     <title>Community Computer Sign-In</title>
     <link rel="stylesheet" type="text/css" href="global.css" />
-    <script type="text/javascript" src="SigWebTablet.js"></script>
     <script type="text/javascript" src="sheets_setup.js"></script>
     <script async defer src="https://apis.google.com/js/api.js"
       onload="this.onload=function(){};handleClientLoad()"
@@ -227,9 +226,23 @@
                 // Additional rows ...
             ];
             
+            //add reservation to monthly sheet
             gapi.client.sheets.spreadsheets.values.append({
               spreadsheetId: '1QoYsSxvCeSjjlbD8NVcOLXjun-tEHoFaKIG4TxcZkAU',
-              range: 'A1',
+              range: 'SignInMonthly!A1',
+              values: values,
+              valueInputOption: 'USER_ENTERED',
+            }).then(function(response) {
+                if(response.error){
+                    alert("encountered an error");
+                }
+            });
+            
+            //add reservation to yearly sheet. 
+            //NOTE: Once a year, when you open a new sheet, make sure to change the name under "range" to <sheetName>!A1
+            gapi.client.sheets.spreadsheets.values.append({
+              spreadsheetId: '1QoYsSxvCeSjjlbD8NVcOLXjun-tEHoFaKIG4TxcZkAU',
+              range: 'SignIn2017!A1',
               values: values,
               valueInputOption: 'USER_ENTERED',
             }).then(function(response) {

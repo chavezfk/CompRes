@@ -168,9 +168,9 @@
             generally, name the sheet SignIn<year> on google sheets,
             then replace the information before the '!' in range. 
             */
-            /*gapi.client.sheets.spreadsheets.values.get({
+            gapi.client.sheets.spreadsheets.values.get({
               spreadsheetId: '1QoYsSxvCeSjjlbD8NVcOLXjun-tEHoFaKIG4TxcZkAU',
-              range: 'SignIn2017!A2:C',
+              range: 'SignInMonthly!A2:C',
             }).then(function(response) {
               var range = response.result;
               if(range.values){
@@ -201,7 +201,7 @@
             }, function(response) {
               alert('Error: ' + response.result.error.message);
             });
-          }*/
+          }
           
         function hideRow(trow)
         {
